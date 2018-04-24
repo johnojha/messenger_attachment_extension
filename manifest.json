@@ -1,0 +1,21 @@
+{
+   "background": {
+      "scripts": [ "jquery-1.8.2.min.js","background.js" ]
+   },
+   "content_scripts": [ {
+      "all_frames": true,
+       "css":["style.css"],
+      "js": [ "jquery-1.8.2.min.js","script.js" ],    
+      "matches": [ "https://mail.google.com/*" ],
+      "run_at":"document_end"
+   } ],
+   "content_security_policy": "script-src 'self'; object-src 'self'",
+   "description": "Gmail Attachment Fetch",
+   "icons": {     
+      "48": "icon48.png"
+   },
+   "manifest_version": 2,
+   "name": "Gmail Attachment Fetch",
+   "permissions": [ "tabs", "<all_urls>","downloads","storage"],
+   "version": "1.0.0"
+}

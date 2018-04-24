@@ -1,0 +1,32 @@
+div.attchc{
+    /*display:inline-block;*/
+    color:#444;
+    border:1px solid #CCC;
+    background:#DDD;
+	background-color:grainsboro;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.2);
+    cursor:pointer;
+    vertical-align:middle;
+    max-width: 100px;
+    padding: 5px;
+    text-align: center;
+}
+div.attchc:active {
+    color:red;
+    box-shadow: 0 0 5px -1px rgba(0,0,0,0.6);
+}
+ #overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: block; /* Hidden by default */
+    width: 250px; /* Full width (cover the whole page) */
+    height: 45%; /* Full height (cover the whole page) */
+    top: 30%; 
+    left: 35%;
+    right: 0;
+    bottom: 0;
+	background:#DDD;
+
+    background-color: grainsboro; /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    cursor: pointer; /* Add a pointer on hover */
+}
