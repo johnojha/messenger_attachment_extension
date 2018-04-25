@@ -18,7 +18,7 @@ vMailApi.executeAppend=function(){
 
 vMailApi.triggerAppend= function(input,i,content){ 
 		if(!input.hidden && input.style.display!='none')
-		 {
+		 { console.log(input);
 			var genId='';
 			var descId ='';
 			if(input.id)
@@ -46,53 +46,56 @@ vMailApi.triggerAppend= function(input,i,content){
 					
 					
 					console.log("Sending message to background script...");
-					var overlay = document.createElement('div');
-					overlay.id="overlay";
-					overlay.style.border="2px solid";
+					if(!document.getElementById('overlay'))
+					{
+						var overlay = document.createElement('div');
+						overlay.id="overlay";
+						overlay.style.border="2px solid";
 
-					var innerElements = "<div id='inputform' style='margin:20px;'><label>Login to swagger : </label><br><br><label id='em'>Email : </label><label id='pw'>Password : </label><button id='_login' style='margin-top:10px;margin-left:155px;'>login</button></div>";
-					overlay.innerHTML = innerElements;
+						var innerElements = "<div id='inputform' style='margin:20px;'><label>Login to swagger : </label><br><br><label id='em'>Email : </label><label id='pw'>Password : </label><button id='_login' style='margin-top:10px;margin-left:155px;'>login</button></div>";
+						overlay.innerHTML = innerElements;
 
-					var email = document.createElement("input");
-					email.type='email';
-					email.id = "_email";
-					email.style.marginTop='';
-					var password = document.createElement("input");
-					password.type='password';
-					password.id = "_password";
-					document.body.appendChild(overlay);
-					document.getElementById('em').appendChild(email);
-					document.getElementById('pw').appendChild(password);
+						var email = document.createElement("input");
+						email.type='email';
+						email.id = "_email";
+						email.style.marginTop='';
+						var password = document.createElement("input");
+						password.type='password';
+						password.id = "_password";
+						document.body.appendChild(overlay);
+						document.getElementById('em').appendChild(email);
+						document.getElementById('pw').appendChild(password);
 
 
-                   document.getElementById("_login").addEventListener("click",function(){ 
-				     console.log(document.getElementById("_email"));
-					   var emailid = document.getElementById("_email").value;
-					   var pwdid = document.getElementById("_password").value;
+					   document.getElementById("_login").addEventListener("click",function(){ 
+						 console.log(document.getElementById("_email"));
+						   var emailid = document.getElementById("_email").value;
+						   var pwdid = document.getElementById("_password").value;
 
-					   console.log(emailid+'----'+pwdid);
-					   var credentials ={email:emailid,pwd:pwdid};
-					   chrome.runtime.sendMessage({action: "login",data:credentials},function(response){ 
-						   //if(response.download)
-							 //  {
-									overlay.style.display="none";
-									var downloadurl = input.querySelectorAll('span[download_url]'); 
-									console.log(downloadurl[0].getAttribute("download_url"));
-									downloadurl=downloadurl[0].getAttribute("download_url");
-                                   
-									var propUrl = downloadurl.substring(downloadurl.indexOf("https"),downloadurl.length);
-									console.log(propUrl);
-									
-									chrome.runtime.sendMessage({action: "getfile",file:propUrl}, function(response) {
-									 // console.log(response.farewell);
-									});
+						   console.log(emailid+'----'+pwdid);
+						   var credentials ={email:emailid,pwd:pwdid};
+						   chrome.runtime.sendMessage({action: "login",data:credentials},function(response){ 
+							   //if(response.download)
+								 //  {
+										overlay.style.display="none";
+										var downloadurl = input.querySelectorAll('span[download_url]'); 
+										console.log(downloadurl[0].getAttribute("download_url"));
+										downloadurl=downloadurl[0].getAttribute("download_url");
+									   
+										var propUrl = downloadurl.substring(downloadurl.indexOf("https"),downloadurl.length);
+										console.log(propUrl);
+										
+										chrome.runtime.sendMessage({action: "getfile",file:propUrl}, function(response) {
+										 // console.log(response.farewell);
+										});
 
-						   
-						   
-						      // }
-							   });
+							   
+							   
+								  // }
+								   });
 
-				   });
+					   });
+				   }
 					
 					
 				});
@@ -137,6 +140,28 @@ vMailApi.triggerAppend= function(input,i,content){
 };
 
 vMailApi.init = function(){ 
+var itemslist =document.getElementsByClassName("hq gt a10");
+
+var observer = new MutationObserver(function(mutations) {
+ for (var i = mutations.length - 1; i >= 0; i--) {
+  var m = mutations[i];
+    var nodes = m.addedNodes;
+    for (var j = nodes.length - 1; j >= 0; j--) {
+        var n = nodes[j]; //console.log(n); console.log(n.className);
+        if (n.className == "Bs nH iY bAt") { 
+		var itemslist =document.getElementsByClassName("hq gt a10");
+
+			console.log(itemslist);
+			vMailApi.nodes.editableNodes = itemslist; 
+
+			vMailApi.executeAppend();
+       }
+     }
+ }
+
+});
+observer.observe(document.body, {childList: true, subtree:true, attributes:true});
+
 	//	var parentDiv = document.getElementsByClassName("nH bkK nn");
 	//	console.log(parentDiv);
 
@@ -145,7 +170,7 @@ vMailApi.init = function(){
 		//console.log(itemslist);
 	document.addEventListener("click",function(event){
 
-		console.log(event);	
+	console.log(event);	
 	var itemslist =document.getElementsByClassName("hq gt a10");
 
 	console.log(itemslist);
@@ -154,6 +179,12 @@ vMailApi.init = function(){
 	vMailApi.executeAppend();
 	});
 	
+	var itemslist =document.getElementsByClassName("hq gt a10");
+
+	console.log(itemslist);
+	vMailApi.nodes.editableNodes = itemslist; 
+
+	vMailApi.executeAppend();
   
 	//	if(document.querySelectorAll(".hq.gt.a10").length)
 	//	{

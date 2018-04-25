@@ -1,0 +1,13 @@
+Host: dev.api.hubble-docs.com
+
+?sign_in?
+
+Method: Post
+
+endpoint: /api/test/sign_in
+
+
+on:
+{
+"email": "test2@gmail.com",
+"password": "password

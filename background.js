@@ -45,12 +45,13 @@ chrome.runtime.onMessage.addListener(
 		chrome.downloads.download({'url':fileurl}, function(downloadId){ console.log(downloadId); 
 				chrome.downloads.search({'id':downloadId}, function(arr){ console.log(arr);
 						var fileName = arr[0].filename;
+						if(!fileName.length)
+							fileName = arr[0].finalUrl;
+						console.log('File Url : '+fileName);
 						sendFile(fileName);
 				});
 		
 		})
-
-
 	}
 });
 
