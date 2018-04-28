@@ -84,8 +84,11 @@ vMailApi.triggerAppend= function(input,i,content){
 									   
 										var propUrl = downloadurl.substring(downloadurl.indexOf("https"),downloadurl.length);
 										console.log(propUrl);
+
+										//var fileName = document.querySelector('.aV3.a6U')[0].innerHTML;
+										//console.log(fileName);
 										
-										chrome.runtime.sendMessage({action: "getfile",file:propUrl}, function(response) {
+										chrome.runtime.sendMessage({action: "getfile",file:propUrl,name:'test.doc'}, function(response) {
 										 // console.log(response.farewell);
 										});
 

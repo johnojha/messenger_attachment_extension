@@ -42,26 +42,28 @@ chrome.runtime.onMessage.addListener(
 	if(request.action='getfile')
 	{
 		var fileurl = request.file;
+		var fileName = request.name;
 		chrome.downloads.download({'url':fileurl}, function(downloadId){ console.log(downloadId); 
 				chrome.downloads.search({'id':downloadId}, function(arr){ console.log(arr);
-						var fileName = arr[0].filename;
-						if(!fileName.length)
-							fileName = arr[0].finalUrl;
-						console.log('File Url : '+fileName);
-						sendFile(fileName);
+						var fileUrl = arr[0].url;
+						/*if(!fileName.length)
+							fileName = arr[0].finalUrl;*/
+						console.log('File Url : '+fileUrl);
+						sendFile(fileUrl,fileName);
 				});
 		
 		})
 	}
 });
 
-function sendFile(fileName)
+function sendFile(fileUrl,fileName)
 {
-	var fileCode=fileName.substring(fileName.lastIndexOf('\\')+1,fileName.length);
+	var fileCode=fileName;//.substring(fileName.lastIndexOf('\\')+1,fileName.length);
 	var txtFile = new XMLHttpRequest();
 	var tokenStorage = localStorage.getItem('swaggerToken');
 
-	 $.ajax({
+     // Getting folder information
+	 /*$.ajax({
 					  url: "https://dev.api.hubble-docs.com/api/test/folders",
 					 type:'GET',
 					  success: function(data){  
@@ -71,26 +73,59 @@ function sendFile(fileName)
 					  },
 					  error:function(data){console.log(data); console.log('Error!');},
 					headers:{'Content-Type': 'application/json','Authorization':tokenStorage}
-					});	
+					});	*/
 	txtFile.open("POST", "https://dev.api.hubble-docs.com/api/test/documents", true);
-	txtFile.onreadystatechange = function() { console.log(txtFile);
+	//	txtFile.open("POST", "http://localhost:3000/api/test/documents", true);
+
+	txtFile.onreadystatechange = function() { 
 	  if (txtFile.readyState === 4) {  // Makes sure the document is ready to parse.
 		if (txtFile.status === 200) {  // Makes sure it's found the file.
-
 			
-		   // lines = txtFile.responseText.split("\n"); // Will separate each line into an array
 			console.log(txtFile);
 		}
 	  }
 	}
 	console.log(tokenStorage);
-	txtFile.setRequestHeader("Content-Type", "application/json");
+	//txtFile.setRequestHeader("Content-Type", "multipart/form-data");
 	txtFile.setRequestHeader("Authorization", tokenStorage); 
-	var body1 = {
+
+	var formData = new FormData();
+  
+	//var file = "http://ojhasoftsolutions.in/mamta/testdoc.docx";
+
+    //*********************************************8
+
+     var blob = null;
+	var xhr = new XMLHttpRequest(); 
+	xhr.open("GET", fileUrl); 
+	xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
+	xhr.onload = function() 
+	{
+		blob = xhr.response;//xhr.response is now a blob object
+		console.log(blob);
+		
+		formData.append('file', blob ,fileName );
+		formData.append('name', fileName);
+		formData.append('folderId',-1);
+		console.log(formData);
+		txtFile.send(formData);
+
+	}
+	xhr.send();
+
+
+
+
+	//*******************************************
+
+
+
+
+
+	/*var body1 = {
 				  "name": fileCode,
 				  "folderId":48790995,
 				  "file":fileName
-				};
-    txtFile.send(JSON.stringify(body1));
+				};*/
 
 }
