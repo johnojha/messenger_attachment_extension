@@ -9,16 +9,16 @@ chrome.runtime.onMessage.addListener(
 	console.log(request);
     if (request.action == "login")
 	{
-		var email = request.data.email;
+		/*var email = request.data.email;
 		var password = request.data.pwd;
 		console.log(email+'--'+password);
-		var request = new XMLHttpRequest();
-		request.open('POST', 'https://dev.api.hubble-docs.com/api/test/users/sign_in',  true);
-		request.onreadystatechange = function() { 
-		if (request.readyState === 4) {  // Makes sure the document is ready to parse.
-			if (request.status === 200) {  // Makes sure it's found the file.
+		var xhrlogin = new XMLHttpRequest();
+		xhrlogin.open('POST', 'https://dev.api.hubble-docs.com/api/test/users/sign_in',  true);
+		xhrlogin.onreadystatechange = function() { 
+		if (xhrlogin.readyState === 4) {  // Makes sure the document is ready to parse.
+			if (xhrlogin.status === 200) {  // Makes sure it's found the file.
      
-				var response = request.responseText;
+				var response = xhrlogin.responseText;
 				response = JSON.parse(response); console.log(response);
 				var accessToken = response.accessToken; console.log(accessToken);
 			    localStorage.setItem("swaggerToken",accessToken);
@@ -26,7 +26,7 @@ chrome.runtime.onMessage.addListener(
 	        }
           }
 		}
-       request.setRequestHeader("Content-Type", "application/json");
+       xhrlogin.setRequestHeader("Content-Type", "application/json");
 
 
 		 var body =  {
@@ -35,29 +35,33 @@ chrome.runtime.onMessage.addListener(
 			}
 
 				  console.log(body);
-		   request.send(JSON.stringify(body));
+		   xhrlogin.send(JSON.stringify(body));*/
 
 	
 	}
 	if(request.action='getfile')
-	{
+	{ console.log(request);
 		var fileurl = request.file;
 		var fileName = request.name;
-		chrome.downloads.download({'url':fileurl}, function(downloadId){ console.log(downloadId); 
-				chrome.downloads.search({'id':downloadId}, function(arr){ console.log(arr);
-						var fileUrl = arr[0].url;
-						/*if(!fileName.length)
-							fileName = arr[0].finalUrl;*/
-						console.log('File Url : '+fileUrl);
-						sendFile(fileUrl,fileName);
-				});
-		
-		})
+		console.log(fileurl);
+		sendFile(fileurl,fileName);
+//				chrome.downloads.download({'url':fileurl}, function(downloadId){ console.log(downloadId); 
+//						chrome.downloads.search({'id':downloadId}, function(arr){ console.log(arr);
+//								var fileUrl = arr[0].url;
+//								/*if(!fileName.length)
+//									fileName = arr[0].finalUrl;*/
+//								console.log('File Url : '+fileUrl);
+//								sendFile(fileUrl,fileName);
+//						});
+//				
+//				})
 	}
 });
 
 function sendFile(fileUrl,fileName)
-{
+{ 
+	console.log(fileUrl);
+	console.log(fileName);
 	var fileCode=fileName;//.substring(fileName.lastIndexOf('\\')+1,fileName.length);
 	var txtFile = new XMLHttpRequest();
 	var tokenStorage = localStorage.getItem('swaggerToken');
@@ -79,7 +83,8 @@ function sendFile(fileUrl,fileName)
 
 	txtFile.onreadystatechange = function() { 
 	  if (txtFile.readyState === 4) {  // Makes sure the document is ready to parse.
-		if (txtFile.status === 200) {  // Makes sure it's found the file.
+		if (txtFile.status === 200) 
+		{  // Makes sure it's found the file.
 			
 			console.log(txtFile);
 		}
