@@ -1,12 +1,13 @@
 {
    "background": {
-      "scripts": [ "jquery-1.8.2.min.js","background.js" ]
+      "scripts": [ "jquery-1.8.2.min.js","/js/jquery.balloon.js","background.js" ]
    },
    "browser_action": {
           "default_icon": {                   
-                       "48": "icon48.png"           
+                       "48": "favicon.png"           
           },
-          "default_title": "Transfer Attachment"
+          "default_title": "Transfer Attachment",
+	  "default_popup":"popup.html"
         },
    "content_scripts": [ {
       "all_frames": true,
@@ -18,7 +19,7 @@
    "content_security_policy": "script-src 'self'; object-src 'self'",
    "description": "Gmail Attachment Fetch",
    "icons": {     
-      "48": "icon48.png"
+      "48": "favicon.png"
    },
    "manifest_version": 2,
    "name": "Gmail Attachment Fetch",
