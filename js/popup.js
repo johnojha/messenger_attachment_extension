@@ -10,7 +10,7 @@ document.getElementById("hubsignin").addEventListener("click",function(e){ conso
 
    var xhrlogin = new XMLHttpRequest();
 		xhrlogin.open('POST', 'https://dev.api.hubble-docs.com/api/test/users/sign_in',  true);
-		xhrlogin.onreadystatechange = function() { 
+		xhrlogin.onreadystatechange = function() { console.log(xhrlogin);
 		if (xhrlogin.readyState === 4) {  // Makes sure the document is ready to parse.
 			if (xhrlogin.status === 200) {  // Makes sure it's found the file.
      
@@ -23,8 +23,15 @@ document.getElementById("hubsignin").addEventListener("click",function(e){ conso
     });
 
 				//sendResponse({download: true});
+				document.getElementById("signstat").innerHTML ="Successfully signed!";
+
+				setTimeout(function() { window.close(); }, 800 );
 	        }
           }
+		  else
+			{
+				document.getElementById("signstat").innerHTML ="<b style='color:red;margin-left: 5px;'>Invalid credentials!</b>";
+			}
 		}
        xhrlogin.setRequestHeader("Content-Type", "application/json");
 
@@ -36,8 +43,5 @@ document.getElementById("hubsignin").addEventListener("click",function(e){ conso
 
 		   console.log(body);
 		   xhrlogin.send(JSON.stringify(body));
-
-
-
 
 });
