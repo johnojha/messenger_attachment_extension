@@ -1,6 +1,4 @@
 
-					
-
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     console.log(sender.tab ?
@@ -8,53 +6,16 @@ chrome.runtime.onMessage.addListener(
                 "from the extension");
 	console.log(request);
     if (request.action == "login")
-	{
-		/*var email = request.data.email;
-		var password = request.data.pwd;
-		console.log(email+'--'+password);
-		var xhrlogin = new XMLHttpRequest();
-		xhrlogin.open('POST', 'https://dev.api.hubble-docs.com/api/test/users/sign_in',  true);
-		xhrlogin.onreadystatechange = function() { 
-		if (xhrlogin.readyState === 4) {  // Makes sure the document is ready to parse.
-			if (xhrlogin.status === 200) {  // Makes sure it's found the file.
-     
-				var response = xhrlogin.responseText;
-				response = JSON.parse(response); console.log(response);
-				var accessToken = response.accessToken; console.log(accessToken);
-			    localStorage.setItem("swaggerToken",accessToken);
-				sendResponse({download: true});
-	        }
-          }
-		}
-       xhrlogin.setRequestHeader("Content-Type", "application/json");
-
-
-		 var body =  {
-				  "email": email,
-				  "password": password
-			}
-
-				  console.log(body);
-		   xhrlogin.send(JSON.stringify(body));*/
+	{	
 
 	
 	}
 	if(request.action='getfile')
-	{ console.log(request);
+	{ 
 		var fileurl = request.file;
 		var fileName = request.name;
 		console.log(fileurl);
 		sendFile(fileurl,fileName);
-//				chrome.downloads.download({'url':fileurl}, function(downloadId){ console.log(downloadId); 
-//						chrome.downloads.search({'id':downloadId}, function(arr){ console.log(arr);
-//								var fileUrl = arr[0].url;
-//								/*if(!fileName.length)
-//									fileName = arr[0].finalUrl;*/
-//								console.log('File Url : '+fileUrl);
-//								sendFile(fileUrl,fileName);
-//						});
-//				
-//				})
 	}
 });
 
@@ -62,22 +23,10 @@ function sendFile(fileUrl,fileName)
 { 
 	console.log(fileUrl);
 	console.log(fileName);
-	var fileCode=fileName;//.substring(fileName.lastIndexOf('\\')+1,fileName.length);
+	var fileCode=fileName;
 	var txtFile = new XMLHttpRequest();
 	var tokenStorage = localStorage.getItem('swaggerToken');
 
-     // Getting folder information
-	 /*$.ajax({
-					  url: "https://dev.api.hubble-docs.com/api/test/folders",
-					 type:'GET',
-					  success: function(data){  
-						  var result = data; 
-						console.log(result);
-					
-					  },
-					  error:function(data){console.log(data); console.log('Error!');},
-					headers:{'Content-Type': 'application/json','Authorization':tokenStorage}
-					});	*/
 	txtFile.open("POST", "https://dev.api.hubble-docs.com/api/test/documents", true);
 	//	txtFile.open("POST", "http://localhost:3000/api/test/documents", true);
 
@@ -91,16 +40,11 @@ function sendFile(fileUrl,fileName)
 	  }
 	}
 	console.log(tokenStorage);
-	//txtFile.setRequestHeader("Content-Type", "multipart/form-data");
 	txtFile.setRequestHeader("Authorization", tokenStorage); 
 
 	var formData = new FormData();
   
-	//var file = "http://ojhasoftsolutions.in/mamta/testdoc.docx";
-
-    //*********************************************8
-
-     var blob = null;
+	var blob = null;
 	var xhr = new XMLHttpRequest(); 
 	xhr.open("GET", fileUrl); 
 	xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
@@ -117,20 +61,82 @@ function sendFile(fileUrl,fileName)
 
 	}
 	xhr.send();
-
-
-
-
-	//*******************************************
-
-
-
-
-
-	/*var body1 = {
-				  "name": fileCode,
-				  "folderId":48790995,
-				  "file":fileName
-				};*/
-
 }
+
+
+chrome.contextMenus.create({title:"Save to Hubble",documentUrlPatterns:["https://www.messenger.com/*"],contexts:["link"],onclick:function(info,tab)
+	{ 
+	    console.log(info);
+		var uri_dec=info.linkUrl;
+		
+		var  propUrl= decodeURIComponent(uri_dec);
+
+									   
+		//var propUrl = downloadurl.substring(downloadurl.indexOf("u=")+2,downloadurl.length);
+		console.log(propUrl);
+
+		var fileNameArr = propUrl.split('?'); console.log(fileNameArr);
+		var fileName = fileNameArr[1].substring(fileNameArr[1].lastIndexOf('/')+1,fileNameArr[1].length);
+		console.log(fileName);
+		if(fileName.indexOf('.doc')==-1 && fileName.indexOf('.docx')==-1)
+		{
+			 alert('Please transfer only doc/docx files.');
+										   return false;
+		}
+
+		fileName = fileName.substring(0, fileName.indexOf('.')-1);
+        var token='';
+		chrome.storage.sync.get(['swaggerToken'], function(items) {
+					  console.log(items);
+					  token = items.swaggerToken;
+					  if(token && token.length)
+						{
+								 var txtFile = new XMLHttpRequest();
+
+								 console.log('Value currently is ' + token);
+
+								  txtFile.open("POST", "https://dev.api.hubble-docs.com/api/test/documents", true);
+								 						  
+								  txtFile.onreadystatechange = function() { 
+								  if (txtFile.readyState === 4) {  
+									if (txtFile.status === 200) 
+									{ 			
+										console.log(txtFile);
+										chrome.tabs.create({url:"https://dev.app.hubble-docs.com/my-folder"}, function() {});										
+									}
+								  }
+								}
+						
+							txtFile.setRequestHeader("Authorization",token); 
+
+							var formData = new FormData();
+						  
+							
+							 var blob = null;
+							var xhr = new XMLHttpRequest(); console.log(propUrl);
+							xhr.open("GET", propUrl); 
+							xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
+							xhr.onload = function() 
+							{
+								blob = xhr.response;//xhr.response is now a blob object
+								console.log(blob);
+								
+								formData.append('file', blob ,fileName);
+								formData.append('name', fileName);
+								formData.append('folderId',-1);
+								console.log(formData);
+								txtFile.send(formData);
+
+							}
+							xhr.send();
+						}
+					  else
+						{
+								alert('Please Sign In to complete the operation.');
+								return false;
+						}
+		 });
+		
+	}	
+},function(){ });
+

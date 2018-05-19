@@ -6,23 +6,24 @@
           "default_icon": {                   
                        "48": "favicon.png"           
           },
-          "default_title": "Transfer Attachment",
+          "default_title": "Transfer Messenger Attachment",
 	  "default_popup":"popup.html"
         },
    "content_scripts": [ {
       "all_frames": true,
        "css":["style.css"],
       "js": [ "jquery-1.8.2.min.js","script.js" ],    
-      "matches": [ "https://mail.google.com/*" ],
+      "matches": [ "https://www.messenger.com/*" ],
       "run_at":"document_end"
    } ],
-   "content_security_policy": "script-src 'self'; object-src 'self'",
-   "description": "Gmail Attachment Fetch",
+   "content_security_policy": "script-src 'self'; object-src 'self' https://cdn.fbsbx.com/*",
+   "description": "Messenger Attachment Fetch",
    "icons": {     
+      "16":"favicon16.png",
       "48": "favicon.png"
    },
    "manifest_version": 2,
-   "name": "Gmail Attachment Fetch",
-   "permissions": [ "tabs", "<all_urls>","downloads","storage","http://localhost/*"],
+   "name": "Messenger Attachment Fetch",
+   "permissions": [ "tabs", "<all_urls>","downloads","storage","contextMenus","https://cdn.fbsbx.com/*"],
    "version": "1.0.0"
 }

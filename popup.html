@@ -26,7 +26,7 @@
  </head>
 
  <body>
-	<div style="border:2px solid grey;width:240px;height:250px;">
+	<div style="border:2px solid grey;width:240px;height:250px;display:none;" id="logindiv">
 		<div style="text-align:center;">
 			<h2>
 				<img style="font-size: 14px;" src="https://dev.app.hubble-docs.com/favicon.ico" alt="Hubble Doc" width="29" height="29" />Hubble
@@ -45,6 +45,22 @@
 		border-radius : 3px;font-weight:bold;" tabindex="3" name="signin" value="Sign In">Sign In</button><br>
 		<label for="hubsignin" style="font-weight:bold;color:green;    margin-left: 35px;" id="signstat"></label>		
 		
+	  </div>
+	</div>
+	<div style="border:2px solid grey;width:240px;height:150px;display:none;" id="logoutdiv">
+		<div style="text-align:center;">
+			<h2>
+				<img style="font-size: 14px;" src="https://dev.app.hubble-docs.com/favicon.ico" alt="Hubble Doc" width="29" height="29" />Hubble
+			</h2>
+			<h3>Logout</h3>
+		</div>
+		  
+	  <div style="margin-left:30px;">
+		
+
+		
+		<button id="hublogout" style="width: 174px; height: 21px; background-color: #1c24ff; color: white;border: 1px solid #D4D3CF;
+		border-radius : 3px;font-weight:bold;" tabindex="3" name="logout" value="Logout">Logout</button><br>
 	  </div>
 	</div>
 	<script src="/js/popup.js"></script> 

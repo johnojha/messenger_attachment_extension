@@ -1,15 +1,7 @@
 'use strict';
 (function() {  
 
-	/**
- * Hover balloon on elements without css and images.
- *
- * Copyright (c) 2011 Hayato Takenaka
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/mit-license.php
- * @author: Hayato Takenaka (https://urin.github.io)
- * @version: 1.1.2 - 2017/04/30
-**/
+	
 (function($) {
   //-----------------------------------------------------------------------------
   // Private
@@ -393,7 +385,7 @@ var vMailApi = self.vMailApi = self.vMailApi || {};
 	flag:false
 };
 
-vMailApi.executeAppend=function(target){ 
+vMailApi.executeAppend=function(target){
 				if(vMailApi.nodes.flag)
 					return;
 				
@@ -406,24 +398,26 @@ vMailApi.executeAppend=function(target){
 						}
 				  }
 			
+			    var pchnod = parentDiv.childNodes;
 									
 				var iconbtn= document.createElement('div');
 				iconbtn.id='hubblebtn';
                 iconbtn.className="T-I J-J5-Ji aQv T-I-ax7 L3";
-				//iconbtn.role="button";
 				iconbtn.setAttribute('role', 'button');
 				iconbtn.setAttribute('disabled', 'false');
 
-				//iconbtn.title="save to Hubble";
 				iconbtn.dataTooltipClass = 'a1V';
-				iconbtn.style="user-select: none;margin-top:8px;";
-				//iconbtn.dataTooltip = "save to Hubble";
+				if(pchnod.length>3)
+					iconbtn.style="user-select: none;margin-top:8px;";
+				else
+					iconbtn.style="user-select: none;margin-top:0px;";
+
 				iconbtn.setAttribute('data-tooltip', 'save to Hubble')
                
                 parentDiv.appendChild(iconbtn);
 
 				var btnImg= document.createElement('img');
-				btnImg.style="width:13px;height:13px;margin-top:7px;";				btnImg.src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAE7UlEQVR4nO3d0W7bOBBA0fFi//+XvQ+tAyfrTGJbFGfIc14KtIiiIrwmKTvS5Xq9BvDYP7NPACoTCCQEAgmBQEIgkBAIJAQCCYFAQiCQEAgkBAIJgUBCIJAQCCQEAgmBQEIgkBAIJAQCCYFAQiCQEAgkBAIJgUBCIJAQCCQEAgmBQEIgkPh39gnQzquPA7gcehYnEQi/ccQzMu6P0SYWgZAZ9fCY23HLh2IPwnfOeLJS+ac3mUH46uxBW3o2MYNwb+YresnZRCDcVBigFc7hE4EQUWtgVjoXgVBrQP5V5pwEAgmB7K3MK/UDJc5NIPsqMQB/MP0cBQIJgexp+ivzE6aeq0AgIRBICGQ/nZZXN9POWSCQEAgkBAIJgUBCIJAQyF46XsGaSiB7KflrrZUJBBICgYRAICGQvdikP8l9sfYgjBcJZG3CeJNA1rRaGNMuTwtkLauFMZ1A1iCMQVzF6m/1OKa++28G6Wv1MEoQSD87hTH9s2MC6WOnMCIKxBEhkA52C6MUgdQ1Ooz7V+hqEZaYPSIEUtGZYdz/XZVIysQRIZBKZoTx9d9nR1Iqjgjvg1QxcmBe4vcDb+YALRdHhBlkttFhvPN1Z80mJcO4EcgcFcN4dJzZy77pBHKubgNu1GxSPowbgZyjWxjZ8V/9v7SJ4p5AxuoeRpXvOY1AxlgxjC0J5HgdNuD8kkCOI4wFCeR9wliYQF4njA0I5Hk24BsRyO8JY0MC+ZkwNiaQ7wkDgXzDBpyIEMhXwuCTToE8O3ifGZDC4KHqgbwzcO+/9rtBap9BqnIgRw7ea5x7Fw9hLKJqICMG8Bm/QiqMxVQLZPZdNV4ljEVVC6QbYSyuUiCdZg9hbKJKIF3iEMZmKgTSIQ5hbMqdFX8mjo1VmEGqEgbTA6m4vBIGH2YHUokw+B97kD/EwUMCgYRAICEQSAgEEgKBhEAgIRBICOSPa9R8V5/JBPKZUPhkdiBV38EWChExP5DqRLI5gfzMbLKxCoFUXWZ9JZQNVQgkok8kEULZSpVAInpFEiGULVQKpCuhLKxaIJcYO5OMPLZQFlQtkJsRA/ly96dQ+JWqgUQcO4gfHeuMUGjucr22+TmOfIDOK8d/RrcLEPzVKZCzCIUPlZdYs9if8EEgj9nIExEC+YlQNieQ3xHKpgTyHJeGNyOQ14wMxWxSiEDeI5TFCeQYQlmUQI5lI78YgRzPFa+FCGQcoSxAIOMJpTGPYDvPLZJRg/ka74c4+hPT7fg07zxVPjV81HksGYsl1jwVLg0fGemSr7QCmW/W/mTEgF4uEkusWkb/MC4nfI/779WeGaQWH4YsRiA1jQ7lDEvEKJDauofSPhKB9NA5lNaRCKSXzqG0JJCehHISgfTWJZK2yyyB9Gc2GUgg6xDKAAJZj1AOJJB1CeUAAllb281xFQKBhEDWZon1JoFAQiCQEAgkBAIJgayvwka9wjm8RCCQEAgkBLKHmUuctsurCIHsZMZAbR1HhEB2c+aAbR9HhEAg5e7u+xl9l/klZo4bM8i+RgzkpeKIEMjujhzQy8URYYnF54HtATpfCIR7yw/4Z1liQUIgkBAIJAQCCYFAQiCQEAgkBAIJgUBCIJAQCCQEAgmBQEIgkBAIJAQCCYFAQiCQEAgkBAIJgUBCIJAQCCQEAgmBQEIgkBAIJAQCCYFAQiCQ+A9M6Kbfoaj7bgAAAABJRU5ErkJggg==" ;
+				btnImg.style="width: 23px; height: 23px; margin-top: 0px;";				btnImg.src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6eAAAE7UlEQVR4nO3d0W7bOBBA0fFi//+XvQ+tAyfrTGJbFGfIc14KtIiiIrwmKTvS5Xq9BvDYP7NPACoTCCQEAgmBQEIgkBAIJAQCCYFAQiCQEAgkBAIJgUBCIJAQCCQEAgmBQEIgkBAIJAQCCYFAQiCQEAgkBAIJgUBCIJAQCCQEAgmBQEIgkPh39gnQzquPA7gcehYnEQi/ccQzMu6P0SYWgZAZ9fCY23HLh2IPwnfOeLJS+ac3mUH46uxBW3o2MYNwb+YresnZRCDcVBigFc7hE4EQUWtgVjoXgVBrQP5V5pwEAgmB7K3MK/UDJc5NIPsqMQB/MP0cBQIJgexp+ivzE6aeq0AgIRBICGQ/nZZXN9POWSCQEAgkBAIJgUBCIJAQyF46XsGaSiB7KflrrZUJBBICgYRAICGQvdikP8l9sfYgjBcJZG3CeJNA1rRaGNMuTwtkLauFMZ1A1iCMQVzF6m/1OKa++28G6Wv1MEoQSD87hTH9s2MC6WOnMCIKxBEhkA52C6MUgdQ1Ooz7V+hqEZaYPSIEUtGZYdz/XZVIysQRIZBKZoTx9d9nR1Iqjgjvg1QxcmBe4vcDb+YALRdHhBlkttFhvPN1Z80mJcO4EcgcFcN4dJzZy77pBHKubgNu1GxSPowbgZyjWxjZ8V/9v7SJ4p5AxuoeRpXvOY1AxlgxjC0J5HgdNuD8kkCOI4wFCeR9wliYQF4njA0I5Hk24BsRyO8JY0MC+ZkwNiaQ7wkDgXzDBpyIEMhXwuCTToE8O3ifGZDC4KHqgbwzcO+/9rtBap9BqnIgRw7ea5x7Fw9hLKJqICMG8Bm/QiqMxVQLZPZdNV4ljEVVC6QbYSyuUiCdZg9hbKJKIF3iEMZmKgTSIQ5hbMqdFX8mjo1VmEGqEgbTA6m4vBIGH2YHUokw+B97kD/EwUMCgYRAICEQSAgEEgKBhEAgIRBICOSPa9R8V5/JBPKZUPhkdiBV38EWChExP5DqRLI5gfzMbLKxCoFUXWZ9JZQNVQgkok8kEULZSpVAInpFEiGULVQKpCuhLKxaIJcYO5OMPLZQFlQtkJsRA/ly96dQ+JWqgUQcO4gfHeuMUGjucr22+TmOfIDOK8d/RrcLEPzVKZCzCIUPlZdYs9if8EEgj9nIExEC+YlQNieQ3xHKpgTyHJeGNyOQ14wMxWxSiEDeI5TFCeQYQlmUQI5lI78YgRzPFa+FCGQcoSxAIOMJpTGPYDvPLZJRg/ka74c4+hPT7fg07zxVPjV81HksGYsl1jwVLg0fGemSr7QCmW/W/mTEgF4uEkusWkb/MC4nfI/779WeGaQWH4YsRiA1jQ7lDEvEKJDauofSPhKB9NA5lNaRCKSXzqG0JJCehHISgfTWJZK2yyyB9Gc2GUgg6xDKAAJZj1AOJJB1CeUAAllb281xFQKBhEDWZon1JoFAQiCQEAgkBAIJgayvwka9wjm8RCCQEAgkBLKHmUuctsurCIHsZMZAbR1HhEB2c+aAbR9HhEAg5e7u+xl9l/klZo4bM8i+RgzkpeKIEMjujhzQy8URYYnF54HtATpfCIR7yw/4Z1liQUIgkBAIJAQCCYFAQiCQEAgkBAIJgUBCIJAQCCQEAgmBQEIgkBAIJAQCCYFAQiCQEAgkBAIJgUBCIJAQCCQEAgmBQEIgkBAIJAQCCYFAQiCQ+A9M6Kbfoaj7bgAAAABJRU5ErkJggg==" ;
                 iconbtn.appendChild(btnImg);
 
 				var balloonDiv = document.createElement('span');
@@ -432,43 +426,33 @@ vMailApi.executeAppend=function(target){
 
 
 				balloonDiv.innerHTML = 'Transferring...  <a href="https://dev.app.hubble-docs.com/my-folder">Organize</a>';
-				//target.appendChild(balloonDiv);
 			
 				var shown = true;
 
-				var token='';
-				chrome.storage.sync.get(['swaggerToken'], function(items) {
-				  console.log(items);
-				  token = items.swaggerToken;
-				});
+				
 
 				$('#hubblebtn').click(function() { 
-					//$('#hubblebtn').balloon({ html: true,position: "right", css:{backgroundColor: '#C0C0C0'} ,minLifetime: 2000,contents: '<p><div id="statushub">Transferring...  </div><a href="https://dev.app.hubble-docs.com/my-folder">Organize</a></p>'});
-                       vMailApi.triggerTransfer(target,token);
+					var token='';
+					chrome.storage.sync.get(['swaggerToken'], function(items) {
+					  console.log(items);
+					  token = items.swaggerToken;
+					  if(token && token.length)
+					                         vMailApi.triggerTransfer(target,token);
+
+					  else
+						{
+					   alert('Please Sign In to complete the operation.');
+										   return false;
+						}
+					});
 				    
-					//shown ? $(this).hideBalloon() : $(this).showBalloon();
-					//shown = !shown;
-				});
-
-
-				/*iconbtn.addEventListener("click",function(){ console.log('aaaa'); //var popup = document.getElementById("myPopup"); console.log(popup);
-				//popup.style.visibility ='visible';
-				     
-				             $('#hubblebtn').balloon({ html: true, contents: '<p>Transferring...  <a href="https://dev.app.hubble-docs.com/my-folder">Organize</a></p>' });
-
-					});*/
-					
+				});					
 
 };
 
 
 vMailApi.triggerTransfer= function(input,token){ 
-	//$('#hubblebtn').unbind('click');
- //chrome.runtime.sendMessage({action: "login",data:credentials},function(response){ 
-							   //if(response.download)
-								 //  {
-										//var downloadurl = input.querySelectorAll('span[download_url]'); 
-										//console.log(downloadurl[0].getAttribute("download_url"));
+	
 										var downloadurl=input.getAttribute("download_url");
 									   
 										var propUrl = downloadurl.substring(downloadurl.indexOf("https"),downloadurl.length);
@@ -476,42 +460,30 @@ vMailApi.triggerTransfer= function(input,token){
 
 										var propName = downloadurl.split(':')[1];
 
-										//var fileName = document.querySelector('.aV3.a6U')[0].innerHTML;
 										console.log(propName);
-										if(downloadurl.split(':')[0]=='application/msword')
+										if(propName.split('.')[1]==('doc' || 'docx'))
 										{
 													console.log('MSWORD');
 												
-												//chrome.runtime.sendMessage({action: "getfile",file:propUrl,name:propName}, function(response) {
-												 // console.log(response.farewell);
-												//});
+												$('#hubblebtn').showBalloon({ html: true,position: "right", css:{backgroundColor: '#C0C0C0',width:'200px',color:'black',height:'20px'},minLifetime: 2000 ,contents: '<div id="statushub" style="font-weight:bold;font-size:12px;text-align:center;">Saving to MyFolder... <a href="https://dev.app.hubble-docs.com/my-folder">Organize</a></div>'});
+												
 										}
 										else
 										{
 										   alert('Please transfer only doc/docx files.');
 										   return false;
-										}
-
+										}		   
 							   
-							   
-								  // }
-								   //});
 
 
-								   var fileCode=propName;//.substring(fileName.lastIndexOf('\\')+1,fileName.length);
+		 var fileCode=propName;//.substring(fileName.lastIndexOf('\\')+1,fileName.length);
 
 	     var txtFile = new XMLHttpRequest();
 
-	     // chrome.storage.local.get(['swaggerToken'], function(result) { 
-		 // console.log(result);
-          console.log('Value currently is ' + token);
+	     console.log('Value currently is ' + token);
 
 		  txtFile.open("POST", "https://dev.api.hubble-docs.com/api/test/documents", true);
-		  //	txtFile.open("POST", "http://localhost:3000/api/test/documents", true);
-				//$('#hubblebtn').showBalloon();
-		vMailApi.nodes.flag=true;
-
-		  $('#hubblebtn').showBalloon({ html: true,position: "right", css:{backgroundColor: '#C0C0C0',width:'200px',color:'black',height:'20px'},minLifetime: 2000 ,contents: '<div id="statushub" style="font-weight:bold;font-size:12px;text-align:center;">Saving to MyFolder... <a href="https://dev.app.hubble-docs.com/my-folder">Organize</a></div>'});
+		 		  
 	      txtFile.onreadystatechange = function() { 
 		  if (txtFile.readyState === 4) {  
 			if (txtFile.status === 200) 
@@ -522,21 +494,15 @@ vMailApi.triggerTransfer= function(input,token){
                 vMailApi.nodes.flag=false;
 				console.log(vMailApi.nodes.flag);
 
-				//$(this).hideBalloon()
 			}
 		  }
 		}
-	//console.log(tokenStorage);
-	//txtFile.setRequestHeader("Content-Type", "multipart/form-data");
+	
 	txtFile.setRequestHeader("Authorization",token); 
 
 	var formData = new FormData();
   
-	//var file = "http://ojhasoftsolutions.in/mamta/testdoc.docx";
-
-    //*********************************************8
-
-     var blob = null;
+	var blob = null;
 	var xhr = new XMLHttpRequest(); 
 	xhr.open("GET", propUrl); 
 	xhr.responseType = "blob";//force the HTTP response, response-type header to be blob
@@ -553,20 +519,6 @@ vMailApi.triggerTransfer= function(input,token){
 
 	}
 	xhr.send();
-      //  });
-     // Getting folder information
-	 /*$.ajax({
-					  url: "https://dev.api.hubble-docs.com/api/test/folders",
-					 type:'GET',
-					  success: function(data){  
-						  var result = data; 
-						console.log(result);
-					
-					  },
-					  error:function(data){console.log(data); console.log('Error!');},
-					headers:{'Content-Type': 'application/json','Authorization':tokenStorage}
-					});	*/
-	
 
 };
 
@@ -597,22 +549,16 @@ vMailApi.triggerAppend= function(input,i,content){
 				input.insertBefore(button, input.firstChild);
              
 			    var parentDiv = document.getElementsByClassName('aQw');
-				parentDiv = parentDiv[0];
-
-
-				//<div id=":4b" class="T-I J-J5-Ji aQv T-I-ax7 L3" role="button" tabindex="0" aria-label="save to Hubble" data-tooltip-class="a1V" style="user-select: none;margin-top:8px;" data-tooltip="save to hubble"><div class="style=height:13px;width:13px;background:no-repeat url(https://dev.app.hubble-docs.com/favicon.ico) -41px 0;"></div></div>
+				parentDiv = parentDiv[0];			
 
 
 				var iconbtn= document.createElement('div');
 				iconbtn.id='hubblebtn';
                 iconbtn.className="T-I J-J5-Ji aQv T-I-ax7 L3";
-				//iconbtn.role="button";
 				iconbtn.setAttribute('role', 'button')
 
-				//iconbtn.title="save to Hubble";
 				iconbtn.dataTooltipClass = 'a1V';
 				iconbtn.style="user-select: none;margin-top:8px;";
-				//iconbtn.dataTooltip = "save to Hubble";
 				iconbtn.setAttribute('data-tooltip', 'save to Hubble')
                
                 parentDiv.appendChild(iconbtn);
@@ -632,8 +578,8 @@ vMailApi.triggerAppend= function(input,i,content){
 
 
 
-iconbtn.addEventListener("click",function(){ console.log('aaaa'); var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show"); });
+                iconbtn.addEventListener("click",function(){ console.log('aaaa'); var popup = document.getElementById("myPopup");
+                 popup.classList.toggle("show"); });
 
 
 				button.addEventListener("click",function(){ 
@@ -702,28 +648,7 @@ iconbtn.addEventListener("click",function(){ console.log('aaaa'); var popup = do
 				   }
 					
 					
-				});
-				/*var span = document.createElement('span');
-				span.style.maxWidth='200px';
-				span.style.padding = '5px';
-				span.style.display='inline-block';
-				span.style.wordWrap='break-word';
-				span.style.marginTop='10px';
-				span.id='desc'+genId;
-				button.parentNode.insertBefore(span, button.nextSibling); 
-				document.querySelector('#'+genId).addEventListener("click", function() {
-					var id = this.id;
-					var splitId = id.substr(id.indexOf('extbtn')+7,id.length); console.log(splitId); 
-					var txtArea= document.querySelector("#"+splitId);
-					if(content=='value')
-					{
-						var data = {"text":'"'+txtArea.value+'"'};
-					}
-					else
-					{
-						 console.log("submiting..."+txtArea.innerHTML);
-						var data = {"text":'"'+txtArea.innerHTML+'"'};
-					}*/
+				});			
 
                    var data = {"email": "test2@gmail.com","password": "password"};
 				   $.ajax({
@@ -744,7 +669,6 @@ iconbtn.addEventListener("click",function(){ console.log('aaaa'); var popup = do
 };
 
 vMailApi.init = function(){ 
-	//var itemslist =document.getElementsByClassName("hq gt a10");
 
 	var observer = new MutationObserver(function(mutations) {
 	 for (var i = mutations.length - 1; i >= 0; i--) {
@@ -760,58 +684,15 @@ vMailApi.init = function(){
 			  }
 		  }
         }
-		//var nodes = m.addedNodes;
-		/*for (var j = nodes.length - 1; j >= 0; j--) {
-			var n = nodes[j]; //console.log(n); console.log(n.className);
-			if (n.className == "aZo N5jrZb") { console.log()
-			//var itemslist =document.getElementsByClassName("hq gt a10");
-				var parentDiv = document.getElementsByClassName('aQw');
-
-				console.log(parentDiv);
-				//vMailApi.nodes.editableNodes = itemslist; 
-
-				//vMailApi.executeAppend();
-		   }
-		 }*/
+		
 	 }
 	});
 	observer.observe(document.body, {childList: true, subtree:true, attributes:true});
 
-		/*//	var parentDiv = document.getElementsByClassName("nH bkK nn");
-		//	console.log(parentDiv);
-
-		//var itemslist =document.getElementsByClassName("hq gt a10");
-
-			//console.log(itemslist);
-		document.addEventListener("click",function(event){
-
-		console.log(event);	
-		var itemslist =document.getElementsByClassName("hq gt a10");
-
-		console.log(itemslist);
-		vMailApi.nodes.editableNodes = itemslist; 
-
-		vMailApi.executeAppend();
-		});
 		
-		var itemslist =document.getElementsByClassName("hq gt a10");
-
-		console.log(itemslist);
-		vMailApi.nodes.editableNodes = itemslist; */
-
-		//vMailApi.executeAppend();
-	  
-		//	if(document.querySelectorAll(".hq.gt.a10").length)
-		//	{
-		//		console.log("%%%%%%%%%%%%%%%%%%%%%%%5");
-		//		console.log(vMailApi.nodes.editableNodes);
-		//	}
-		//		vMailApi.nodes.editableNodes = document.querySelectorAll(".hq.gt.a10"); 
-		//		vMailApi.executeAppend();
 	};
 
 vMailApi.init(); 
 
 })();
-
 
