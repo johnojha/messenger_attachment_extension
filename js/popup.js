@@ -1,6 +1,15 @@
 
+chrome.storage.sync.get(['swaggerToken'], function(items) {
+				  console.log(items);
+				  var token = items.swaggerToken;
+				  if(token && token.length)
+					  logoutdiv.style.display="block";
+				  else
+					  logindiv.style.display="block";
 
-document.getElementById("hubsignin").addEventListener("click",function(e){ console.log(e);
+});
+
+document.getElementById("hubsignin").addEventListener("click",function(e){ 
 
    var emailid = document.getElementById("hubmail").value;
    var pwdid = document.getElementById("hubpwd").value;
@@ -24,8 +33,9 @@ document.getElementById("hubsignin").addEventListener("click",function(e){ conso
 
 				//sendResponse({download: true});
 				document.getElementById("signstat").innerHTML ="Successfully signed!";
-
-				setTimeout(function() { window.close(); }, 800 );
+					logoutdiv.style.display="block";
+					logindiv.style.display="none";
+				//setTimeout(function() { window.close(); }, 800 );
 	        }
           }
 		  else
@@ -44,4 +54,13 @@ document.getElementById("hubsignin").addEventListener("click",function(e){ conso
 		   console.log(body);
 		   xhrlogin.send(JSON.stringify(body));
 
+});
+
+document.getElementById("hublogout").addEventListener("click",function(e){
+
+	chrome.storage.sync.remove(['swaggerToken'], function(){ console.log('removed');
+					logoutdiv.style.display="none";
+					logindiv.style.display="block";
+
+	 })
 });
